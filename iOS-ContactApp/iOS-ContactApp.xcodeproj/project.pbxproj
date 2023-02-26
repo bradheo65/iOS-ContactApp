@@ -12,7 +12,10 @@
 		A3E4814E29A8E70000AC8C59 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4814D29A8E70000AC8C59 /* MainViewController.swift */; };
 		A3E4815329A8E70100AC8C59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3E4815229A8E70100AC8C59 /* Assets.xcassets */; };
 		A3E4815629A8E70100AC8C59 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3E4815429A8E70100AC8C59 /* LaunchScreen.storyboard */; };
-		A3E4815E29AAF1A600AC8C59 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4815D29AAF1A600AC8C59 /* TableViewCell.swift */; };
+		A3E4815E29AAF1A600AC8C59 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4815D29AAF1A600AC8C59 /* ContactCell.swift */; };
+		A3E4816129AB19D500AC8C59 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A3E4816029AB19D500AC8C59 /* SnapKit */; };
+		A3E4816329AB1E6500AC8C59 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4816229AB1E6500AC8C59 /* Contact.swift */; };
+		A3E4816629AB919C00AC8C59 /* Extension+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4816529AB919C00AC8C59 /* Extension+UIImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +26,9 @@
 		A3E4815229A8E70100AC8C59 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A3E4815529A8E70100AC8C59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A3E4815729A8E70100AC8C59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A3E4815D29AAF1A600AC8C59 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		A3E4815D29AAF1A600AC8C59 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
+		A3E4816229AB1E6500AC8C59 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		A3E4816529AB919C00AC8C59 /* Extension+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImageView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3E4816129AB19D500AC8C59 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +62,25 @@
 		A3E4814829A8E70000AC8C59 /* iOS-ContactApp */ = {
 			isa = PBXGroup;
 			children = (
+				A3E4816429AB918400AC8C59 /* Extension */,
 				A3E4814929A8E70000AC8C59 /* AppDelegate.swift */,
 				A3E4814B29A8E70000AC8C59 /* SceneDelegate.swift */,
 				A3E4814D29A8E70000AC8C59 /* MainViewController.swift */,
-				A3E4815D29AAF1A600AC8C59 /* TableViewCell.swift */,
+				A3E4816229AB1E6500AC8C59 /* Contact.swift */,
+				A3E4815D29AAF1A600AC8C59 /* ContactCell.swift */,
 				A3E4815229A8E70100AC8C59 /* Assets.xcassets */,
 				A3E4815429A8E70100AC8C59 /* LaunchScreen.storyboard */,
 				A3E4815729A8E70100AC8C59 /* Info.plist */,
 			);
 			path = "iOS-ContactApp";
+			sourceTree = "<group>";
+		};
+		A3E4816429AB918400AC8C59 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A3E4816529AB919C00AC8C59 /* Extension+UIImageView.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +99,9 @@
 			dependencies = (
 			);
 			name = "iOS-ContactApp";
+			packageProductDependencies = (
+				A3E4816029AB19D500AC8C59 /* SnapKit */,
+			);
 			productName = "iOS-ContactApp";
 			productReference = A3E4814629A8E70000AC8C59 /* iOS-ContactApp.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +130,9 @@
 				Base,
 			);
 			mainGroup = A3E4813D29A8E70000AC8C59;
+			packageReferences = (
+				A3E4815F29AB19D500AC8C59 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = A3E4814729A8E70000AC8C59 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,7 +160,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3E4814E29A8E70000AC8C59 /* MainViewController.swift in Sources */,
-				A3E4815E29AAF1A600AC8C59 /* TableViewCell.swift in Sources */,
+				A3E4815E29AAF1A600AC8C59 /* ContactCell.swift in Sources */,
+				A3E4816329AB1E6500AC8C59 /* Contact.swift in Sources */,
+				A3E4816629AB919C00AC8C59 /* Extension+UIImageView.swift in Sources */,
 				A3E4814A29A8E70000AC8C59 /* AppDelegate.swift in Sources */,
 				A3E4814C29A8E70000AC8C59 /* SceneDelegate.swift in Sources */,
 			);
@@ -352,6 +376,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A3E4815F29AB19D500AC8C59 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A3E4816029AB19D500AC8C59 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A3E4815F29AB19D500AC8C59 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A3E4813E29A8E70000AC8C59 /* Project object */;
 }

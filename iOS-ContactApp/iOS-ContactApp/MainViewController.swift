@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class MainViewController: UIViewController {
 
@@ -16,7 +17,7 @@ final class MainViewController: UIViewController {
         return tableView
     }()
     
-    private let mockData = ["1", "2", "3"]
+    private var contactData: [Contact] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +25,7 @@ final class MainViewController: UIViewController {
         addViews()
         setLayouts()
         tableViewSetting()
+        fetchItem()
     }
 
 }
@@ -31,36 +33,65 @@ final class MainViewController: UIViewController {
 extension MainViewController {
 
     private func addViews() {
-        view.addSubview(tableView)
+        self.view.addSubview(tableView)
     }
 
     private func setLayouts() {
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-        ])
+        tableView.snp.makeConstraints { make in
+            make.top.leading.trailing.bottom.equalTo(self.view)
+        }
     }
     
     private func tableViewSetting() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.id)
+        tableView.register(ContactCell.self, forCellReuseIdentifier: ContactCell.id)
     }
+    
+    private func fetchItem() {
+        guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else { return }
+        
+        URLSession.shared.dataTask(with: url) { data, response, err in
+            if let err = err {
+                print(err.localizedDescription)
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse else {
+                return
+            }
+            if response.statusCode == 200 {
+                guard let data = data else {
+                    return
+                }
+                DispatchQueue.main.async {
+                    do {
+                        let fetchedItems = try JSONDecoder().decode([Contact].self, from: data)
+                        self.contactData = fetchedItems
+                        self.tableView.reloadData()
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            } else {
+                print("HTTP URL Response code: \(response.statusCode)")
+            }
+        }.resume()
+    }
+    
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mockData.count
+        return contactData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.id, for: indexPath) as? TableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactCell.id, for: indexPath) as? ContactCell else {
             return UITableViewCell()
         }
-        cell.configure(data: mockData[indexPath.row])
+        cell.configure(data: contactData[indexPath.row])
         
         return cell
     }
