@@ -18,13 +18,23 @@ final class MainViewController: UIViewController {
     }()
     
     private var contactData: [Contact] = []
+    private var filterContactData: [Contact] = []
+    
+    private var isFiltering: Bool {
+        let serarchController = self.navigationItem.searchController
+        let isActive = serarchController?.isActive ?? false
+        let isSearchBarHasText = serarchController?.searchBar.text?.isEmpty == false
+        return isActive && isSearchBarHasText
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addViews()
         setLayouts()
-        tableViewSetting()
+        setupNavigationBar()
+        setupSearchController()
+        setupTableView()
         fetchItem()
     }
 
@@ -42,7 +52,22 @@ extension MainViewController {
         }
     }
     
-    private func tableViewSetting() {
+    private func setupNavigationBar() {
+        navigationItem.title = "My Contact"
+    }
+    
+    func setupSearchController() {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "Search Contact"
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        searchController.searchResultsUpdater = self
+        
+        self.navigationItem.searchController = searchController
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
+    private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ContactCell.self, forCellReuseIdentifier: ContactCell.id)
@@ -84,17 +109,34 @@ extension MainViewController {
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contactData.count
+        return isFiltering ? filterContactData.count : contactData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactCell.id, for: indexPath) as? ContactCell else {
             return UITableViewCell()
         }
-        cell.configure(data: contactData[indexPath.row])
+        if isFiltering {
+            cell.configure(data: filterContactData[indexPath.row])
+        } else {
+            cell.configure(data: contactData[indexPath.row])
+        }
         
         return cell
     }
     
 }
 
+extension MainViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text?.lowercased() else { return }
+        filterContactData = contactData.filter {
+            $0.name.localizedCaseInsensitiveContains(text)
+        }
+        
+        tableView.reloadData()
+    }
+    
+    
+}
