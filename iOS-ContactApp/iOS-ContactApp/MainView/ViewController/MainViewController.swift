@@ -135,8 +135,9 @@ extension MainViewController: UISearchResultsUpdating {
             $0.name.localizedCaseInsensitiveContains(text)
         }
         
-        tableView.reloadData()
+        if text != "" {
+            tableView.reloadData()
+        }
     }
-    
     
 }
