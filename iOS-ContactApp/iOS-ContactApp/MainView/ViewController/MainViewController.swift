@@ -53,7 +53,8 @@ extension MainViewController {
     }
     
     private func setupNavigationBar() {
-        navigationItem.title = "My Contact"
+        navigationController?.navigationBar.topItem?.title = "My Contact"
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     func setupSearchController() {
