@@ -12,7 +12,7 @@ final class ContactCell: UITableViewCell {
 
     static let id = "ContactCell"
     
-    lazy var contactImageView: UIImageView = {
+    private lazy var contactImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 30
         imageView.clipsToBounds = true
@@ -20,35 +20,35 @@ final class ContactCell: UITableViewCell {
         return imageView
     }()
     
-    lazy var activityIndicatorView: UIActivityIndicatorView = {
+    private lazy var activityIndicatorView: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView()
         indicatorView.startAnimating()
         indicatorView.translatesAutoresizingMaskIntoConstraints = false
         return indicatorView
     }()
     
-    lazy var verticalStackView: UIStackView = {
+    private lazy var verticalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
-    lazy var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .headline)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    lazy var phoneNumberLabel: UILabel = {
+    private lazy var phoneNumberLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .footnote)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    lazy var emailLabel: UILabel = {
+    private lazy var emailLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .footnote)
         label.translatesAutoresizingMaskIntoConstraints = false

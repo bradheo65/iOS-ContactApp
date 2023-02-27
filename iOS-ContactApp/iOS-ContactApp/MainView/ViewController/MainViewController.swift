@@ -57,7 +57,7 @@ extension MainViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
-    func setupSearchController() {
+    private func setupSearchController() {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "Search Contact"
         searchController.hidesNavigationBarDuringPresentation = false
