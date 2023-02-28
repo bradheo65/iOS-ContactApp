@@ -21,7 +21,8 @@ final class MainViewController: UIViewController {
 
     private var contactData: [Contact] = []
     private var filterContactData: [Contact] = []
-    
+    private var attributeString: String = ""
+
     private var isFiltering: Bool {
         let serarchController = self.navigationItem.searchController
         let isActive = serarchController?.isActive ?? false
@@ -63,7 +64,7 @@ extension MainViewController {
     private func setupSearchController() {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "Search Contact"
-        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = true
         
         searchController.searchResultsUpdater = self
         
@@ -136,6 +137,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         }
         if isFiltering {
             cell.configure(data: filterContactData[indexPath.row])
+
+            guard let text = cell.nameLabel.text else { return UITableViewCell() }
+            
+            let attr = NSMutableAttributedString(string: text)
+            attr.addAttribute(.foregroundColor, value: UIColor.red, range: (text as NSString).range(of: attributeString))
+            print(attributeString)
+            cell.nameLabel.attributedText = attr
         } else {
             cell.configure(data: contactData[indexPath.row])
         }
@@ -148,11 +156,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 extension MainViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text?.lowercased() else { return }
+        guard let text = searchController.searchBar.text else { return }
         filterContactData = contactData.filter {
             $0.name.localizedCaseInsensitiveContains(text)
         }
-        
+
+        attributeString = text
         tableView.reloadData()
     }
     
