@@ -17,6 +17,8 @@ final class MainViewController: UIViewController {
         return tableView
     }()
     
+    private let refreshControl = UIRefreshControl()
+
     private var contactData: [Contact] = []
     private var filterContactData: [Contact] = []
     
@@ -31,9 +33,10 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         
         addViews()
-        setLayouts()
+        setupLayout()
         setupNavigationBar()
         setupSearchController()
+        setupRefreshControl()
         setupTableView()
         fetchItem()
     }
@@ -46,17 +49,18 @@ extension MainViewController {
         self.view.addSubview(tableView)
     }
 
-    private func setLayouts() {
+    private func setupLayout() {
         tableView.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalTo(self.view)
         }
     }
     
     private func setupNavigationBar() {
-        navigationItem.title = "My Contact"
+        navigationController?.navigationBar.topItem?.title = "My Contact"
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
-    func setupSearchController() {
+    private func setupSearchController() {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "Search Contact"
         searchController.hidesNavigationBarDuringPresentation = false
@@ -71,6 +75,20 @@ extension MainViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ContactCell.self, forCellReuseIdentifier: ContactCell.id)
+    }
+    
+    private func setupRefreshControl() {
+        refreshControl.addTarget(self, action: #selector(refreshTable(refresh:)), for: .valueChanged)
+        refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
+        
+        tableView.refreshControl = refreshControl
+    }
+    
+    @objc private func refreshTable(refresh: UIRefreshControl) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.tableView.reloadData()
+            refresh.endRefreshing()
+        }
     }
     
     private func fetchItem() {
@@ -133,10 +151,6 @@ extension MainViewController: UISearchResultsUpdating {
         guard let text = searchController.searchBar.text?.lowercased() else { return }
         filterContactData = contactData.filter {
             $0.name.localizedCaseInsensitiveContains(text)
-        }
-        
-        if text != "" {
-            tableView.reloadData()
         }
     }
     
