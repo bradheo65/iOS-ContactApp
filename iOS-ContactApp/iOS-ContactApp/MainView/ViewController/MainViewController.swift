@@ -135,10 +135,6 @@ extension MainViewController: UISearchResultsUpdating {
         filterContactData = contactData.filter {
             $0.name.localizedCaseInsensitiveContains(text)
         }
-        
-        if text != "" {
-            tableView.reloadData()
-        }
     }
     
 }
