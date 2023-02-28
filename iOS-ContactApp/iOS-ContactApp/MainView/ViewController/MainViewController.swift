@@ -31,7 +31,7 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         
         addViews()
-        setLayouts()
+        setupLayout()
         setupNavigationBar()
         setupSearchController()
         setupTableView()
@@ -46,7 +46,7 @@ extension MainViewController {
         self.view.addSubview(tableView)
     }
 
-    private func setLayouts() {
+    private func setupLayout() {
         tableView.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalTo(self.view)
         }

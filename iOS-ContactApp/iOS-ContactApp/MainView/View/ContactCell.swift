@@ -59,7 +59,7 @@ final class ContactCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         addViews()
-        setLayouts()
+        setupLayout()
     }
 
     required init?(coder: NSCoder) {
@@ -104,7 +104,7 @@ extension ContactCell {
         }
     }
 
-    private func setLayouts() {
+    private func setupLayout() {
         contactImageView.snp.makeConstraints { make in
             make.top.equalTo(self.contentView.snp.top).offset(10)
             make.leading.equalTo(self.contentView.snp.leading).offset(10)
