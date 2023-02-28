@@ -66,6 +66,15 @@ final class ContactCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        contactImageView.image = nil
+        nameLabel.text = nil
+        phoneNumberLabel.text = nil
+        emailLabel.text = nil
+    }
+    
     func configure(data: Contact) {
         contactImageView.load(url: URL(string: "https://i.pravatar.cc/?img=\(data.id)")!) { response in
             switch response {
