@@ -142,7 +142,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             
             let attr = NSMutableAttributedString(string: text)
             attr.addAttribute(.foregroundColor, value: UIColor.red, range: (text as NSString).range(of: attributeString))
-            print(attributeString)
+
             cell.nameLabel.attributedText = attr
         } else {
             cell.configure(data: contactData[indexPath.row])
