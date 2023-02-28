@@ -17,6 +17,8 @@ final class MainViewController: UIViewController {
         return tableView
     }()
     
+    private let refreshControl = UIRefreshControl()
+
     private var contactData: [Contact] = []
     private var filterContactData: [Contact] = []
     
@@ -34,6 +36,7 @@ final class MainViewController: UIViewController {
         setupLayout()
         setupNavigationBar()
         setupSearchController()
+        setupRefreshControl()
         setupTableView()
         fetchItem()
     }
@@ -72,6 +75,20 @@ extension MainViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ContactCell.self, forCellReuseIdentifier: ContactCell.id)
+    }
+    
+    func setupRefreshControl() {
+        refreshControl.addTarget(self, action: #selector(refreshTable(refresh:)), for: .valueChanged)
+        refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
+        
+        tableView.refreshControl = refreshControl
+    }
+    
+    @objc func refreshTable(refresh: UIRefreshControl) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.tableView.reloadData()
+            refresh.endRefreshing()
+        }
     }
     
     private func fetchItem() {
