@@ -16,11 +16,12 @@ final class DetailContactTableViewController: UITableViewController {
     
     private lazy var diffableDataSource: UITableViewDiffableDataSource<Section, AnyHashable> = .init(tableView: tableView) { (tableView, indexPath, object) -> UITableViewCell? in
         
-        if let object = object as? Contact {
+        if let object = object as? Int {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: ContactThumbnailViewCell.id,
                 for: indexPath
             ) as! ContactThumbnailViewCell
+            cell.configure(data: object)
             
             cell.configure(data: object.id)
             return cell
@@ -43,6 +44,12 @@ final class DetailContactTableViewController: UITableViewController {
         snapshot.appendSections([.thumbnail])
         snapshot.appendItems([data], toSection: .thumbnail)
         
+        snapshot.appendItems(
+            [
+                data.id
+            ],
+            toSection: .thumbnail
+        )
         diffableDataSource.apply(snapshot, animatingDifferences: true)
     }
     
