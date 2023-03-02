@@ -58,7 +58,7 @@ extension MainViewController {
     
     private func setupNavigationBar() {
         navigationController?.navigationBar.topItem?.title = "My Contact"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     private func setupSearchController() {
@@ -149,6 +149,17 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailContentViewController = DetailContactTableViewController()
+        if isFiltering {
+            navigationController?.pushViewController(detailContentViewController, animated: true)
+            detailContentViewController.configure(data: filterContactData[indexPath.row])
+        } else {
+            navigationController?.pushViewController(detailContentViewController, animated: true)
+            detailContentViewController.configure(data: contactData[indexPath.row])
+        }
     }
     
 }
