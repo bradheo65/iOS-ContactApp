@@ -12,6 +12,9 @@ final class DetailContactTableViewController: UITableViewController {
         
     enum Section: CaseIterable {
         case thumbnail
+        case contact
+        case address
+        case company
     }
     
     private lazy var diffableDataSource: UITableViewDiffableDataSource<Section, AnyHashable> = .init(tableView: tableView) { (tableView, indexPath, object) -> UITableViewCell? in
@@ -23,7 +26,14 @@ final class DetailContactTableViewController: UITableViewController {
             ) as! ContactThumbnailViewCell
             cell.configure(data: object)
             
-            cell.configure(data: object.id)
+            return cell
+        } else if let object = object as? String {
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: ContactInfoViewCell.id,
+                for: indexPath
+            ) as! ContactInfoViewCell
+            cell.configure(info: object)
+            
             return cell
         }
         
@@ -38,17 +48,32 @@ final class DetailContactTableViewController: UITableViewController {
     }
     
     func configure(data: Contact) {
-        guard let data = data as? AnyHashable else { return }
         var snapshot = self.diffableDataSource.snapshot()
         
-        snapshot.appendSections([.thumbnail])
-        snapshot.appendItems([data], toSection: .thumbnail)
-        
+        snapshot.appendSections([.thumbnail, .contact, .address, .company])
         snapshot.appendItems(
             [
                 data.id
             ],
             toSection: .thumbnail
+        )
+        snapshot.appendItems(
+            [
+                data.name, data.phone, data.email
+            ],
+            toSection: .contact
+        )
+        snapshot.appendItems(
+            [
+                data.address.street, data.address.suite, data.address.city, data.address.zipcode
+            ],
+            toSection: .address
+        )
+        snapshot.appendItems(
+            [
+                data.company.name, data.company.catchPhrase, data.company.bs
+            ],
+            toSection: .company
         )
         diffableDataSource.apply(snapshot, animatingDifferences: true)
     }
@@ -73,6 +98,10 @@ extension DetailContactTableViewController {
         self.tableView.register(
             ContactThumbnailViewCell.self,
             forCellReuseIdentifier: ContactThumbnailViewCell.id
+        )
+        self.tableView.register(
+            ContactInfoViewCell.self,
+            forCellReuseIdentifier: ContactInfoViewCell.id
         )
     }
     
