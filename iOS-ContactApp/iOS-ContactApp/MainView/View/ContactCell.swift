@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 final class ContactCell: UITableViewCell {
 
@@ -20,13 +21,6 @@ final class ContactCell: UITableViewCell {
         return imageView
     }()
     
-    private lazy var activityIndicatorView: UIActivityIndicatorView = {
-        let indicatorView = UIActivityIndicatorView()
-        indicatorView.startAnimating()
-        indicatorView.translatesAutoresizingMaskIntoConstraints = false
-        return indicatorView
-    }()
-    
     private lazy var verticalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -34,7 +28,7 @@ final class ContactCell: UITableViewCell {
         return stackView
     }()
     
-    private lazy var nameLabel: UILabel = {
+    lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .headline)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -76,15 +70,8 @@ final class ContactCell: UITableViewCell {
     }
     
     func configure(data: Contact) {
-        contactImageView.load(url: URL(string: "https://i.pravatar.cc/?img=\(data.id)")!) { response in
-            switch response {
-            case .success(let image):
-                self.contactImageView.image = image
-                self.activityIndicatorView.stopAnimating()
-            case .failure(let failure):
-                print(failure.localizedDescription)
-            }
-        }
+        contactImageView.kf.indicatorType = .activity
+        contactImageView.kf.setImage(with: URL(string: "https://i.pravatar.cc/?img=\(data.id)"))
         nameLabel.text = data.name
         phoneNumberLabel.text = data.phone
         emailLabel.text = data.email
@@ -95,7 +82,7 @@ final class ContactCell: UITableViewCell {
 extension ContactCell {
 
     private func addViews() {
-        [contactImageView, activityIndicatorView, verticalStackView].forEach { view in
+        [contactImageView, verticalStackView].forEach { view in
             self.contentView.addSubview(view)
         }
         
@@ -112,10 +99,6 @@ extension ContactCell {
 
             make.width.equalTo(self.contentView.snp.width).multipliedBy(0.2)
             make.height.equalTo(self.contentView.snp.width).multipliedBy(0.2).priority(750)
-        }
-        
-        activityIndicatorView.snp.makeConstraints { make in
-            make.center.equalTo(contactImageView.snp.center)
         }
       
         verticalStackView.snp.makeConstraints { make in
