@@ -17,6 +17,9 @@
 		A3E4816329AB1E6500AC8C59 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4816229AB1E6500AC8C59 /* Contact.swift */; };
 		A3E4816629AB919C00AC8C59 /* Extension+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4816529AB919C00AC8C59 /* Extension+UIImageView.swift */; };
 		A3E4816D29AD955200AC8C59 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A3E4816C29AD955200AC8C59 /* Kingfisher */; };
+		A3E4818929B0443D00AC8C59 /* ContactThumbnailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4818829B0443D00AC8C59 /* ContactThumbnailViewCell.swift */; };
+		A3E4818B29B044DD00AC8C59 /* DetailContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4818A29B044DD00AC8C59 /* DetailContactTableViewController.swift */; };
+		A3E4819029B07B0800AC8C59 /* ContactInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4818F29B07B0800AC8C59 /* ContactInfoViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		A3E4815D29AAF1A600AC8C59 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		A3E4816229AB1E6500AC8C59 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		A3E4816529AB919C00AC8C59 /* Extension+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImageView.swift"; sourceTree = "<group>"; };
+		A3E4818829B0443D00AC8C59 /* ContactThumbnailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactThumbnailViewCell.swift; sourceTree = "<group>"; };
+		A3E4818A29B044DD00AC8C59 /* DetailContactTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailContactTableViewController.swift; sourceTree = "<group>"; };
+		A3E4818F29B07B0800AC8C59 /* ContactInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +75,7 @@
 				A3E4816429AB918400AC8C59 /* Extension */,
 				A3E4816929AB9F1E00AC8C59 /* Model */,
 				A3E4816A29AB9F3D00AC8C59 /* MainView */,
+				A3E4818C29B0460A00AC8C59 /* DetailContact */,
 				A3E4815229A8E70100AC8C59 /* Assets.xcassets */,
 				A3E4815429A8E70100AC8C59 /* LaunchScreen.storyboard */,
 				A3E4815729A8E70100AC8C59 /* Info.plist */,
@@ -115,6 +122,32 @@
 				A3E4816729AB9EF200AC8C59 /* View */,
 			);
 			path = MainView;
+			sourceTree = "<group>";
+		};
+		A3E4818C29B0460A00AC8C59 /* DetailContact */ = {
+			isa = PBXGroup;
+			children = (
+				A3E4818D29B0461900AC8C59 /* ViewController */,
+				A3E4818E29B0462300AC8C59 /* View */,
+			);
+			path = DetailContact;
+			sourceTree = "<group>";
+		};
+		A3E4818D29B0461900AC8C59 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A3E4818A29B044DD00AC8C59 /* DetailContactTableViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		A3E4818E29B0462300AC8C59 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A3E4818829B0443D00AC8C59 /* ContactThumbnailViewCell.swift */,
+				A3E4818F29B07B0800AC8C59 /* ContactInfoViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,10 +229,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3E4814E29A8E70000AC8C59 /* MainViewController.swift in Sources */,
+				A3E4819029B07B0800AC8C59 /* ContactInfoViewCell.swift in Sources */,
 				A3E4815E29AAF1A600AC8C59 /* ContactCell.swift in Sources */,
 				A3E4816329AB1E6500AC8C59 /* Contact.swift in Sources */,
 				A3E4816629AB919C00AC8C59 /* Extension+UIImageView.swift in Sources */,
+				A3E4818929B0443D00AC8C59 /* ContactThumbnailViewCell.swift in Sources */,
 				A3E4814A29A8E70000AC8C59 /* AppDelegate.swift in Sources */,
+				A3E4818B29B044DD00AC8C59 /* DetailContactTableViewController.swift in Sources */,
 				A3E4814C29A8E70000AC8C59 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
