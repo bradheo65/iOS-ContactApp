@@ -78,6 +78,23 @@ final class DetailContactTableViewController: UITableViewController {
         diffableDataSource.apply(snapshot, animatingDifferences: true)
     }
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+       let contactHeaderView = ContactHeaderView()
+        
+        if section == 1 {
+            contactHeaderView.configure(with: "Contact")
+            return contactHeaderView
+        } else if section == 2 {
+            contactHeaderView.configure(with: "Address")
+            return contactHeaderView
+        } else if section == 3 {
+            contactHeaderView.configure(with: "Company")
+            return contactHeaderView
+        }
+        
+        return UIView()
+    }
+    
 }
 
 extension DetailContactTableViewController {
@@ -102,6 +119,10 @@ extension DetailContactTableViewController {
         self.tableView.register(
             ContactInfoViewCell.self,
             forCellReuseIdentifier: ContactInfoViewCell.id
+        )
+        self.tableView.register(
+            ContactHeaderView.self,
+            forHeaderFooterViewReuseIdentifier: ContactHeaderView.id
         )
     }
     

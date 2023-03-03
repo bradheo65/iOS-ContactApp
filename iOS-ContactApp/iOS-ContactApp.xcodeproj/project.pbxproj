@@ -20,6 +20,7 @@
 		A3E4818929B0443D00AC8C59 /* ContactThumbnailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4818829B0443D00AC8C59 /* ContactThumbnailViewCell.swift */; };
 		A3E4818B29B044DD00AC8C59 /* DetailContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4818A29B044DD00AC8C59 /* DetailContactTableViewController.swift */; };
 		A3E4819029B07B0800AC8C59 /* ContactInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4818F29B07B0800AC8C59 /* ContactInfoViewCell.swift */; };
+		A3E4819329B198F800AC8C59 /* ContactHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4819229B198F800AC8C59 /* ContactHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		A3E4818829B0443D00AC8C59 /* ContactThumbnailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactThumbnailViewCell.swift; sourceTree = "<group>"; };
 		A3E4818A29B044DD00AC8C59 /* DetailContactTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailContactTableViewController.swift; sourceTree = "<group>"; };
 		A3E4818F29B07B0800AC8C59 /* ContactInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoViewCell.swift; sourceTree = "<group>"; };
+		A3E4819229B198F800AC8C59 /* ContactHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,8 +148,17 @@
 			children = (
 				A3E4818829B0443D00AC8C59 /* ContactThumbnailViewCell.swift */,
 				A3E4818F29B07B0800AC8C59 /* ContactInfoViewCell.swift */,
+				A3E4819129B198E200AC8C59 /* Header */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		A3E4819129B198E200AC8C59 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				A3E4819229B198F800AC8C59 /* ContactHeaderView.swift */,
+			);
+			path = Header;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,6 +247,7 @@
 				A3E4818929B0443D00AC8C59 /* ContactThumbnailViewCell.swift in Sources */,
 				A3E4814A29A8E70000AC8C59 /* AppDelegate.swift in Sources */,
 				A3E4818B29B044DD00AC8C59 /* DetailContactTableViewController.swift in Sources */,
+				A3E4819329B198F800AC8C59 /* ContactHeaderView.swift in Sources */,
 				A3E4814C29A8E70000AC8C59 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
