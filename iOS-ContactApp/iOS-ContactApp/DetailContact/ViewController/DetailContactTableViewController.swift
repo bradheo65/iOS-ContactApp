@@ -65,7 +65,7 @@ final class DetailContactTableViewController: UITableViewController {
         )
         snapshot.appendItems(
             [
-                data.address.street, data.address.suite, data.address.city, data.address.zipcode
+                "\(data.address.street). \(data.address.suite). \(data.address.city). \(data.address.zipcode)"
             ],
             toSection: .address
         )
