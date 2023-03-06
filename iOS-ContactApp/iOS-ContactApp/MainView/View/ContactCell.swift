@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import Kingfisher
 
 final class ContactCell: UITableViewCell {
 
@@ -70,8 +69,26 @@ final class ContactCell: UITableViewCell {
     }
     
     func configure(data: Contact) {
-        contactImageView.kf.indicatorType = .activity
-        contactImageView.kf.setImage(with: URL(string: "https://i.pravatar.cc/?img=\(data.id)"))
+        let request = URLRequest(url: URL(string: "https://i.pravatar.cc/?img=\(data.id)")!)
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            guard let data = data, let image = UIImage(data: data) else {
+                DispatchQueue.main.async {
+                    self.contactImageView.image = .init(systemName: "xmark")
+                }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.contactImageView.image = image
+            }
+        }
+        task.resume()
+        
         nameLabel.text = data.name
         phoneNumberLabel.text = data.phone
         emailLabel.text = data.email

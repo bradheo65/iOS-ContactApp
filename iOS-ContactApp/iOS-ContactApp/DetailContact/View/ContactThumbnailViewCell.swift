@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import Kingfisher
 
 final class ContactThumbnailViewCell: UITableViewCell {
     
@@ -40,7 +39,25 @@ final class ContactThumbnailViewCell: UITableViewCell {
     }
     
     func configure(data: Int) {
-        thumbnailImageView.kf.setImage(with: URL(string: "https://i.pravatar.cc/?img=\(data)"))
+        let request = URLRequest(url: URL(string: "https://i.pravatar.cc/?img=\(data)")!)
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            guard let data = data, let image = UIImage(data: data) else {
+                DispatchQueue.main.async {
+                    self.thumbnailImageView.image = .init(systemName: "xmark")
+                }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.thumbnailImageView.image = image
+            }
+        }
+        task.resume()
     }
 }
 
