@@ -10,10 +10,15 @@ import SnapKit
 
 final class MainViewController: UIViewController {
 
+    enum Section: CaseIterable {
+        case main
+    }
+    
+    private var dataSource: UITableViewDiffableDataSource<Section, Contact>!
+    
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
         return tableView
     }()
     
@@ -32,13 +37,14 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         addViews()
         setupLayout()
         setupNavigationBar()
         setupSearchController()
         setupRefreshControl()
         setupTableView()
+        setupTableViewDiffableDataSource()
         fetchItem()
     }
 
@@ -72,12 +78,6 @@ extension MainViewController {
         self.navigationItem.hidesSearchBarWhenScrolling = false
     }
     
-    private func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(ContactCell.self, forCellReuseIdentifier: ContactCell.id)
-    }
-    
     private func setupRefreshControl() {
         refreshControl.addTarget(self, action: #selector(refreshTable(refresh:)), for: .valueChanged)
         refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
@@ -87,11 +87,36 @@ extension MainViewController {
     
     @objc private func refreshTable(refresh: UIRefreshControl) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.tableView.reloadData()
+            self.fetchItem()
             refresh.endRefreshing()
         }
     }
     
+    private func setupTableView() {
+        tableView.delegate = self
+        tableView.register(ContactCell.self, forCellReuseIdentifier: ContactCell.id)
+    }
+    
+    private func setupTableViewDiffableDataSource() {
+        self.dataSource = UITableViewDiffableDataSource(tableView: self.tableView) { (tableView, indexPath, object) -> UITableViewCell? in
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactCell.id, for: indexPath) as? ContactCell else { return nil }
+            if self.isFiltering {
+                cell.configure(data: self.filterContactData[indexPath.row])
+                
+                guard let text = cell.nameLabel.text else { return UITableViewCell() }
+                
+                let attr = NSMutableAttributedString(string: text)
+                attr.addAttribute(.foregroundColor, value: UIColor.red, range: (text as NSString).range(of: self.attributeString))
+                
+                cell.nameLabel.attributedText = attr
+            } else {
+                cell.configure(data: self.contactData[indexPath.row])
+            }
+            return cell
+        }
+    }
+
     private func fetchItem() {
         guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else { return }
         
@@ -112,7 +137,12 @@ extension MainViewController {
                     do {
                         let fetchedItems = try JSONDecoder().decode([Contact].self, from: data)
                         self.contactData = fetchedItems
-                        self.tableView.reloadData()
+                        
+                        var snapshot = NSDiffableDataSourceSnapshot<Section, Contact>()
+                        snapshot.appendSections([.main])
+                        
+                        snapshot.appendItems(self.contactData)
+                        self.dataSource.apply(snapshot, animatingDifferences: false)
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -125,34 +155,11 @@ extension MainViewController {
     
 }
 
-extension MainViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isFiltering ? filterContactData.count : contactData.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactCell.id, for: indexPath) as? ContactCell else {
-            return UITableViewCell()
-        }
-        if isFiltering {
-            cell.configure(data: filterContactData[indexPath.row])
-
-            guard let text = cell.nameLabel.text else { return UITableViewCell() }
-            
-            let attr = NSMutableAttributedString(string: text)
-            attr.addAttribute(.foregroundColor, value: UIColor.red, range: (text as NSString).range(of: attributeString))
-
-            cell.nameLabel.attributedText = attr
-        } else {
-            cell.configure(data: contactData[indexPath.row])
-        }
-        
-        return cell
-    }
-    
+extension MainViewController: UITableViewDelegate {
+ 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailContentViewController = DetailContactTableViewController()
+        
         if isFiltering {
             navigationController?.pushViewController(detailContentViewController, animated: true)
             detailContentViewController.configure(data: filterContactData[indexPath.row])
@@ -167,13 +174,22 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 extension MainViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Contact>()
+        snapshot.appendSections([.main])
+
         guard let text = searchController.searchBar.text else { return }
         filterContactData = contactData.filter {
             $0.name.localizedCaseInsensitiveContains(text)
         }
 
         attributeString = text
-        tableView.reloadData()
+        
+        if isFiltering {
+            snapshot.appendItems(filterContactData)
+        } else {
+            snapshot.appendItems(contactData)
+        }
+        self.dataSource.apply(snapshot, animatingDifferences: true)
     }
     
 }
