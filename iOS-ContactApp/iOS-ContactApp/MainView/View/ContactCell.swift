@@ -100,7 +100,7 @@ extension ContactCell {
 
     private func addViews() {
         [contactImageView, verticalStackView].forEach { view in
-            self.contentView.addSubview(view)
+            contentView.addSubview(view)
         }
         
         [nameLabel, phoneNumberLabel, emailLabel].forEach { view in
@@ -110,18 +110,18 @@ extension ContactCell {
 
     private func setupLayout() {
         contactImageView.snp.makeConstraints { make in
-            make.top.equalTo(self.contentView.snp.top).offset(10)
-            make.leading.equalTo(self.contentView.snp.leading).offset(10)
-            make.bottom.equalTo(self.contentView.snp.bottom).offset(-10)
+            make.top.equalTo(contentView.snp.top).offset(10)
+            make.leading.equalTo(contentView.snp.leading).offset(10)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-10)
 
-            make.width.equalTo(self.contentView.snp.width).multipliedBy(0.2)
-            make.height.equalTo(self.contentView.snp.width).multipliedBy(0.2).priority(750)
+            make.width.equalTo(contentView.snp.width).multipliedBy(0.2)
+            make.height.equalTo(contentView.snp.width).multipliedBy(0.2).priority(750)
         }
       
         verticalStackView.snp.makeConstraints { make in
             make.top.equalTo(contactImageView.snp.top)
             make.leading.equalTo(contactImageView.snp.trailing).offset(10)
-            make.trailing.equalTo(self.contentView.snp.trailing).offset(-10)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-10)
             make.bottom.equalTo(contactImageView.snp.bottom)
         }
     }

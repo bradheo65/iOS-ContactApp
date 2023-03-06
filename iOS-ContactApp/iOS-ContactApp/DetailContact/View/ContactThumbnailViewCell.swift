@@ -23,7 +23,7 @@ final class ContactThumbnailViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.contentView.backgroundColor = .systemGroupedBackground
+        contentView.backgroundColor = .systemGroupedBackground
         addViews()
         setupLayout()
     }
@@ -64,17 +64,17 @@ final class ContactThumbnailViewCell: UITableViewCell {
 extension ContactThumbnailViewCell {
     
     private func addViews() {
-        self.contentView.addSubview(thumbnailImageView)
+        contentView.addSubview(thumbnailImageView)
     }
     
     private func setupLayout() {
         thumbnailImageView.snp.makeConstraints { make in
-            make.top.bottom.equalTo(self.contentView)
+            make.top.bottom.equalTo(contentView)
             
-            make.centerX.equalTo(self.contentView.snp.centerX)
+            make.centerX.equalTo(contentView.snp.centerX)
             
-            make.width.equalTo(self.contentView.snp.width).multipliedBy(0.3)
-            make.height.equalTo(self.contentView.snp.width).multipliedBy(0.3).priority(750)
+            make.width.equalTo(contentView.snp.width).multipliedBy(0.3)
+            make.height.equalTo(contentView.snp.width).multipliedBy(0.3).priority(750)
         }
     }
     

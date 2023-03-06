@@ -29,7 +29,7 @@ final class MainViewController: UIViewController {
     private var attributeString: String = ""
 
     private var isFiltering: Bool {
-        let serarchController = self.navigationItem.searchController
+        let serarchController = navigationItem.searchController
         let isActive = serarchController?.isActive ?? false
         let isSearchBarHasText = serarchController?.searchBar.text?.isEmpty == false
         return isActive && isSearchBarHasText
@@ -53,12 +53,12 @@ final class MainViewController: UIViewController {
 extension MainViewController {
 
     private func addViews() {
-        self.view.addSubview(tableView)
+        view.addSubview(tableView)
     }
 
     private func setupLayout() {
         tableView.snp.makeConstraints { make in
-            make.top.leading.trailing.bottom.equalTo(self.view)
+            make.top.leading.trailing.bottom.equalTo(view)
         }
     }
     
@@ -71,11 +71,10 @@ extension MainViewController {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "Search Contact"
         searchController.hidesNavigationBarDuringPresentation = true
-        
         searchController.searchResultsUpdater = self
         
-        self.navigationItem.searchController = searchController
-        self.navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     private func setupRefreshControl() {
@@ -98,13 +97,17 @@ extension MainViewController {
     }
     
     private func setupTableViewDiffableDataSource() {
-        self.dataSource = UITableViewDiffableDataSource(tableView: self.tableView) { (tableView, indexPath, object) -> UITableViewCell? in
+        dataSource = UITableViewDiffableDataSource(tableView: self.tableView) { (tableView, indexPath, object) -> UITableViewCell? in
             
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactCell.id, for: indexPath) as? ContactCell else { return nil }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactCell.id, for: indexPath) as? ContactCell else {
+                return nil
+            }
             if self.isFiltering {
                 cell.configure(data: self.filterContactData[indexPath.row])
                 
-                guard let text = cell.nameLabel.text else { return UITableViewCell() }
+                guard let text = cell.nameLabel.text else {
+                    return UITableViewCell()
+                }
                 
                 let attr = NSMutableAttributedString(string: text)
                 attr.addAttribute(.foregroundColor, value: UIColor.red, range: (text as NSString).range(of: self.attributeString))
@@ -118,7 +121,9 @@ extension MainViewController {
     }
 
     private func fetchItem() {
-        guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else { return }
+        guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else {
+            return
+        }
         
         URLSession.shared.dataTask(with: url) { data, response, err in
             if let err = err {
@@ -177,7 +182,9 @@ extension MainViewController: UISearchResultsUpdating {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Contact>()
         snapshot.appendSections([.main])
 
-        guard let text = searchController.searchBar.text else { return }
+        guard let text = searchController.searchBar.text else {
+            return
+        }
         filterContactData = contactData.filter {
             $0.name.localizedCaseInsensitiveContains(text)
         }
@@ -189,7 +196,7 @@ extension MainViewController: UISearchResultsUpdating {
         } else {
             snapshot.appendItems(contactData)
         }
-        self.dataSource.apply(snapshot, animatingDifferences: true)
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
     
 }
