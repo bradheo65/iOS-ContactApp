@@ -39,12 +39,7 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
 
         addViews()
-        setupLayout()
-        setupNavigationBar()
-        setupSearchController()
-        setupRefreshControl()
-        setupTableView()
-        setupTableViewDiffableDataSource()
+        setupConfigure()
         fetchItem()
     }
 
@@ -52,10 +47,19 @@ final class MainViewController: UIViewController {
 
 extension MainViewController {
 
+    private func setupConfigure() {
+        setupLayout()
+        setupNavigationBar()
+        setupSearchController()
+        setupRefreshControl()
+        setupTableView()
+        setupTableViewDiffableDataSource()
+    }
+    
     private func addViews() {
         view.addSubview(tableView)
     }
-
+    
     private func setupLayout() {
         tableView.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalTo(view)
@@ -104,15 +108,6 @@ extension MainViewController {
             }
             if self.isFiltering {
                 cell.configure(data: self.filterContactData[indexPath.row])
-                
-                guard let text = cell.nameLabel.text else {
-                    return UITableViewCell()
-                }
-                
-                let attr = NSMutableAttributedString(string: text)
-                attr.addAttribute(.foregroundColor, value: UIColor.red, range: (text as NSString).range(of: self.attributeString))
-                
-                cell.nameLabel.attributedText = attr
             } else {
                 cell.configure(data: self.contactData[indexPath.row])
             }
@@ -147,7 +142,7 @@ extension MainViewController {
                         snapshot.appendSections([.main])
                         
                         snapshot.appendItems(self.contactData)
-                        self.dataSource.apply(snapshot, animatingDifferences: false)
+                        self.dataSource.apply(snapshot, animatingDifferences: true)
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -156,6 +151,16 @@ extension MainViewController {
                 print("HTTP URL Response code: \(response.statusCode)")
             }
         }.resume()
+    }
+    
+    func performQuery(with filter: String?) {
+        let filterItem = self.contactData.filter { $0.name.hasPrefix(filter ?? "") }
+
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Contact>()
+        
+        snapshot.appendSections([.main])
+        snapshot.appendItems(filterItem)
+        self.dataSource.apply(snapshot, animatingDifferences: true)
     }
     
 }
@@ -179,24 +184,13 @@ extension MainViewController: UITableViewDelegate {
 extension MainViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Contact>()
-        snapshot.appendSections([.main])
-
         guard let text = searchController.searchBar.text else {
             return
         }
         filterContactData = contactData.filter {
-            $0.name.localizedCaseInsensitiveContains(text)
+            $0.name.hasPrefix(text)
         }
-
-        attributeString = text
-        
-        if isFiltering {
-            snapshot.appendItems(filterContactData)
-        } else {
-            snapshot.appendItems(contactData)
-        }
-        dataSource.apply(snapshot, animatingDifferences: true)
+        performQuery(with: text)
     }
     
 }
