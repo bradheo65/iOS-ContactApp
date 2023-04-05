@@ -15,11 +15,10 @@
 		A3E4815E29AAF1A600AC8C59 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4815D29AAF1A600AC8C59 /* ContactCell.swift */; };
 		A3E4816129AB19D500AC8C59 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A3E4816029AB19D500AC8C59 /* SnapKit */; };
 		A3E4816329AB1E6500AC8C59 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4816229AB1E6500AC8C59 /* Contact.swift */; };
-		A3E4816629AB919C00AC8C59 /* Extension+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4816529AB919C00AC8C59 /* Extension+UIImageView.swift */; };
-		A3E4816D29AD955200AC8C59 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A3E4816C29AD955200AC8C59 /* Kingfisher */; };
 		A3E4818929B0443D00AC8C59 /* ContactThumbnailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4818829B0443D00AC8C59 /* ContactThumbnailViewCell.swift */; };
 		A3E4818B29B044DD00AC8C59 /* DetailContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4818A29B044DD00AC8C59 /* DetailContactTableViewController.swift */; };
 		A3E4819029B07B0800AC8C59 /* ContactInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4818F29B07B0800AC8C59 /* ContactInfoViewCell.swift */; };
+		A3E4819329B198F800AC8C59 /* ContactHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4819229B198F800AC8C59 /* ContactHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,10 +31,10 @@
 		A3E4815729A8E70100AC8C59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3E4815D29AAF1A600AC8C59 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		A3E4816229AB1E6500AC8C59 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
-		A3E4816529AB919C00AC8C59 /* Extension+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImageView.swift"; sourceTree = "<group>"; };
 		A3E4818829B0443D00AC8C59 /* ContactThumbnailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactThumbnailViewCell.swift; sourceTree = "<group>"; };
 		A3E4818A29B044DD00AC8C59 /* DetailContactTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailContactTableViewController.swift; sourceTree = "<group>"; };
 		A3E4818F29B07B0800AC8C59 /* ContactInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoViewCell.swift; sourceTree = "<group>"; };
+		A3E4819229B198F800AC8C59 /* ContactHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,7 +42,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3E4816D29AD955200AC8C59 /* Kingfisher in Frameworks */,
 				A3E4816129AB19D500AC8C59 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -72,7 +70,6 @@
 			children = (
 				A3E4814929A8E70000AC8C59 /* AppDelegate.swift */,
 				A3E4814B29A8E70000AC8C59 /* SceneDelegate.swift */,
-				A3E4816429AB918400AC8C59 /* Extension */,
 				A3E4816929AB9F1E00AC8C59 /* Model */,
 				A3E4816A29AB9F3D00AC8C59 /* MainView */,
 				A3E4818C29B0460A00AC8C59 /* DetailContact */,
@@ -81,14 +78,6 @@
 				A3E4815729A8E70100AC8C59 /* Info.plist */,
 			);
 			path = "iOS-ContactApp";
-			sourceTree = "<group>";
-		};
-		A3E4816429AB918400AC8C59 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				A3E4816529AB919C00AC8C59 /* Extension+UIImageView.swift */,
-			);
-			path = Extension;
 			sourceTree = "<group>";
 		};
 		A3E4816729AB9EF200AC8C59 /* View */ = {
@@ -146,8 +135,17 @@
 			children = (
 				A3E4818829B0443D00AC8C59 /* ContactThumbnailViewCell.swift */,
 				A3E4818F29B07B0800AC8C59 /* ContactInfoViewCell.swift */,
+				A3E4819129B198E200AC8C59 /* Header */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		A3E4819129B198E200AC8C59 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				A3E4819229B198F800AC8C59 /* ContactHeaderView.swift */,
+			);
+			path = Header;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,7 +166,6 @@
 			name = "iOS-ContactApp";
 			packageProductDependencies = (
 				A3E4816029AB19D500AC8C59 /* SnapKit */,
-				A3E4816C29AD955200AC8C59 /* Kingfisher */,
 			);
 			productName = "iOS-ContactApp";
 			productReference = A3E4814629A8E70000AC8C59 /* iOS-ContactApp.app */;
@@ -200,7 +197,6 @@
 			mainGroup = A3E4813D29A8E70000AC8C59;
 			packageReferences = (
 				A3E4815F29AB19D500AC8C59 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				A3E4816B29AD955200AC8C59 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = A3E4814729A8E70000AC8C59 /* Products */;
 			projectDirPath = "";
@@ -232,10 +228,10 @@
 				A3E4819029B07B0800AC8C59 /* ContactInfoViewCell.swift in Sources */,
 				A3E4815E29AAF1A600AC8C59 /* ContactCell.swift in Sources */,
 				A3E4816329AB1E6500AC8C59 /* Contact.swift in Sources */,
-				A3E4816629AB919C00AC8C59 /* Extension+UIImageView.swift in Sources */,
 				A3E4818929B0443D00AC8C59 /* ContactThumbnailViewCell.swift in Sources */,
 				A3E4814A29A8E70000AC8C59 /* AppDelegate.swift in Sources */,
 				A3E4818B29B044DD00AC8C59 /* DetailContactTableViewController.swift in Sources */,
+				A3E4819329B198F800AC8C59 /* ContactHeaderView.swift in Sources */,
 				A3E4814C29A8E70000AC8C59 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -458,14 +454,6 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		A3E4816B29AD955200AC8C59 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onevcat/Kingfisher";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -473,11 +461,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A3E4815F29AB19D500AC8C59 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		A3E4816C29AD955200AC8C59 /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A3E4816B29AD955200AC8C59 /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -25,7 +25,6 @@ final class DetailContactTableViewController: UITableViewController {
                 for: indexPath
             ) as! ContactThumbnailViewCell
             cell.configure(data: object)
-            
             return cell
         } else if let object = object as? String {
             let cell = tableView.dequeueReusableCell(
@@ -33,7 +32,6 @@ final class DetailContactTableViewController: UITableViewController {
                 for: indexPath
             ) as! ContactInfoViewCell
             cell.configure(info: object)
-            
             return cell
         }
         
@@ -48,7 +46,7 @@ final class DetailContactTableViewController: UITableViewController {
     }
     
     func configure(data: Contact) {
-        var snapshot = self.diffableDataSource.snapshot()
+        var snapshot = diffableDataSource.snapshot()
         
         snapshot.appendSections([.thumbnail, .contact, .address, .company])
         snapshot.appendItems(
@@ -78,30 +76,51 @@ final class DetailContactTableViewController: UITableViewController {
         diffableDataSource.apply(snapshot, animatingDifferences: true)
     }
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+       let contactHeaderView = ContactHeaderView()
+        
+        if section == 1 {
+            contactHeaderView.configure(with: "Contact")
+            return contactHeaderView
+        } else if section == 2 {
+            contactHeaderView.configure(with: "Address")
+            return contactHeaderView
+        } else if section == 3 {
+            contactHeaderView.configure(with: "Company")
+            return contactHeaderView
+        }
+        
+        return UIView()
+    }
+    
 }
 
 extension DetailContactTableViewController {
     
     private func setupLayout() {
         self.tableView.snp.makeConstraints { make in
-            make.top.leading.bottom.trailing.equalTo(self.view)
+            make.top.leading.bottom.trailing.equalTo(view)
         }
     }
     
     private func setupTableView() {
-        self.tableView = UITableView(
+        tableView = UITableView(
             frame: view.bounds,
             style: .insetGrouped
         )
-        self.tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.tableView.register(
+        tableView.register(
             ContactThumbnailViewCell.self,
             forCellReuseIdentifier: ContactThumbnailViewCell.id
         )
-        self.tableView.register(
+        tableView.register(
             ContactInfoViewCell.self,
             forCellReuseIdentifier: ContactInfoViewCell.id
+        )
+        self.tableView.register(
+            ContactHeaderView.self,
+            forHeaderFooterViewReuseIdentifier: ContactHeaderView.id
         )
     }
     

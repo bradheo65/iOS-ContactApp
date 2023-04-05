@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import Kingfisher
 
 final class ContactThumbnailViewCell: UITableViewCell {
     
@@ -24,7 +23,7 @@ final class ContactThumbnailViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.contentView.backgroundColor = .systemGroupedBackground
+        contentView.backgroundColor = .systemGroupedBackground
         addViews()
         setupLayout()
     }
@@ -40,24 +39,42 @@ final class ContactThumbnailViewCell: UITableViewCell {
     }
     
     func configure(data: Int) {
-        thumbnailImageView.kf.setImage(with: URL(string: "https://i.pravatar.cc/?img=\(data)"))
+        let request = URLRequest(url: URL(string: "https://i.pravatar.cc/?img=\(data)")!)
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            guard let data = data, let image = UIImage(data: data) else {
+                DispatchQueue.main.async {
+                    self.thumbnailImageView.image = .init(systemName: "xmark")
+                }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.thumbnailImageView.image = image
+            }
+        }
+        task.resume()
     }
 }
 
 extension ContactThumbnailViewCell {
     
     private func addViews() {
-        self.contentView.addSubview(thumbnailImageView)
+        contentView.addSubview(thumbnailImageView)
     }
     
     private func setupLayout() {
         thumbnailImageView.snp.makeConstraints { make in
-            make.top.bottom.equalTo(self.contentView)
+            make.top.bottom.equalTo(contentView)
             
-            make.centerX.equalTo(self.contentView.snp.centerX)
+            make.centerX.equalTo(contentView.snp.centerX)
             
-            make.width.equalTo(self.contentView.snp.width).multipliedBy(0.3)
-            make.height.equalTo(self.contentView.snp.width).multipliedBy(0.3).priority(750)
+            make.width.equalTo(contentView.snp.width).multipliedBy(0.3)
+            make.height.equalTo(contentView.snp.width).multipliedBy(0.3).priority(750)
         }
     }
     
